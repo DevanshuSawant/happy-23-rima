@@ -12,7 +12,7 @@ const CONFIG = {
   cloudGap: 220,         // Gap between top and bottom obstacles (increased from 180 for easier play)
   minCloudHeight: 50,    // Min height of obstacle clouds
   cloudInterval: 150,    // Generation interval of obstacle clouds in frames
-  targetDistance: 1500,  // Total distance in km to reach Mumbai (approx 45 seconds of play)
+  targetDistance: 1500,  // Total distance in km to reach Rima Land (approx 45 seconds of play)
   planeX: 150,           // X position of the plane on canvas
   assets: {
     plane: 'assets/images/rima_plane.png',

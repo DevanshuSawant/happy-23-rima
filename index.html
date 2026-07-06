@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,24 +8,26 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Outfit:wght@100..900&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <!-- Main Game Container -->
   <div id="game-container">
-    
+
     <!-- Canvas for 2D Game -->
     <canvas id="game-canvas"></canvas>
 
     <!-- UI Overlay Screens -->
-    
+
     <!-- SCREEN 1: INTRO -->
     <div id="screen-intro" class="overlay-screen active">
       <div class="glass-card text-center">
         <h1 class="game-title">✨ Rima's Sky Adventure ✨</h1>
         <p class="game-subtitle">A Special Birthday Flight 🎂✈️💖</p>
-        
+
         <div class="intro-graphic-container">
           <!-- A cute styled plane outline or mini illustration -->
           <div class="heart-pulse-icon">💖</div>
@@ -32,7 +35,8 @@
         </div>
 
         <p class="story-text" style="margin-bottom: 25px; font-size: 1.05rem; line-height: 1.6;">
-          A private plane has been booked for Rima's special birthday party! Everyone is on board, the cake is ready, and we are cleared for departure. Board the plane to start the celebration! 🎉🌸🍭
+          A private plane has been booked for Rima's special birthday party! Everyone is on board, the cake is ready,
+          and we are cleared for departure. Board the plane to start the celebration! 🎉🌸🍭
         </p>
 
         <button id="btn-start-story" class="btn btn-primary btn-pulse">Board the Plane! 🛫✨</button>
@@ -53,7 +57,8 @@
               <span class="emoji-bubble delay-2">😴</span>
               <span class="emoji-bubble delay-3">✈️</span>
             </div>
-            <p class="fallback-text">Everyone is eating birthday cake and having fun... but the pilot has fallen asleep! 😴💤</p>
+            <p class="fallback-text">Everyone is eating birthday cake and having fun... but the pilot has fallen asleep!
+              😴💤</p>
           </div>
         </div>
         <div class="video-controls-row">
@@ -65,7 +70,7 @@
 
     <!-- SCREEN 3: HUD (Heads-Up Display during gameplay) -->
     <div id="hud" class="hud-container hidden">
-      <!-- Progress Bar (Varanasi to Mumbai route hidden for surprise) -->
+      <!-- Progress Bar (Varanasi to Rima Land route hidden for surprise) -->
       <div class="progress-bar-wrapper">
         <span id="hud-start-btn" class="airport-code left" style="cursor: pointer;">🛫 START</span>
         <div class="progress-track">
@@ -102,8 +107,9 @@
     <div id="screen-gameover" class="overlay-screen">
       <div class="glass-card text-center">
         <h2 class="screen-title danger-color">Rough Landing! 💥</h2>
-        <p class="story-text">Don't worry, Captain Rima! The passengers are cheering you on. Take off again and save the day!</p>
-        
+        <p class="story-text">Don't worry, Captain Rima! The passengers are cheering you on. Take off again and save the
+          day!</p>
+
         <div class="stats-summary">
           <div class="summary-item">
             <span class="summary-label">Memories Passed</span>
@@ -141,7 +147,8 @@
               <span class="emoji-bubble delay-2">👩‍✈️</span>
               <span class="emoji-bubble delay-3">🏆</span>
             </div>
-            <p class="fallback-text">Captain Rima landed the plane safely! The airline presents her with a special birthday reward... 🎫💖</p>
+            <p class="fallback-text">Captain Rima landed the plane safely! The airline presents her with a special
+              birthday reward... 🎫💖</p>
           </div>
         </div>
         <div class="video-controls-row">
@@ -155,8 +162,8 @@
     <div id="screen-win" class="overlay-screen">
       <div class="win-content">
         <h1 class="win-title animate-bounce">Congratulations Captain! 🎉</h1>
-        <p class="win-subtitle">You landed safely in Mumbai! Everyone is safe!</p>
-        
+        <p class="win-subtitle">You landed safely in Rima Land! Everyone is safe!</p>
+
         <!-- Envelope Container -->
         <div class="envelope-wrapper">
           <div class="envelope" id="gift-envelope">
@@ -173,7 +180,7 @@
         <div id="ticket-modal" class="ticket-modal">
           <div class="ticket-container">
             <div class="ticket-cutout"></div>
-            
+
             <!-- Main Ticket Body -->
             <div class="ticket">
               <div class="ticket-header">
@@ -238,7 +245,8 @@
                   <span class="stub-price">PAID IN HUGS</span>
                 </div>
                 <div class="stub-body">
-                  <p class="stub-message">Happy Birthday my love! Here's to exploring the world together. Pack your bags for Mumbai! 🎒🛫❤️</p>
+                  <p class="stub-message">Happy Birthday my love! Here's to exploring the world together. Pack your bags
+                    for Mumbai! 🎒🛫❤️</p>
                   <div class="barcode">
                     <!-- Dynamic styled barcode bars -->
                     <div class="barcode-line w-2"></div>
@@ -256,7 +264,7 @@
                 </div>
               </div>
             </div>
-            
+
             <button id="btn-close-ticket" class="btn btn-secondary mt-4">Close Ticket</button>
           </div>
         </div>
@@ -268,4 +276,5 @@
 
   <script src="game.js"></script>
 </body>
+
 </html>
