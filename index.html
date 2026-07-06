@@ -70,31 +70,33 @@
 
     <!-- SCREEN 3: HUD (Heads-Up Display during gameplay) -->
     <div id="hud" class="hud-container hidden">
-      <!-- Progress Bar (Varanasi to Rima Land route hidden for surprise) -->
-      <div class="progress-bar-wrapper">
-        <span id="hud-start-btn" class="airport-code left" style="cursor: pointer;">🛫 START</span>
-        <div class="progress-track">
-          <div id="progress-fill" class="progress-fill"></div>
-          <div id="progress-plane" class="progress-plane">✈️</div>
+      <div class="hud-top-group">
+        <!-- Progress Bar (Varanasi to Rima Land route hidden for surprise) -->
+        <div class="progress-bar-wrapper">
+          <span id="hud-start-btn" class="airport-code left" style="cursor: pointer;">🛫 START</span>
+          <div class="progress-track">
+            <div id="progress-fill" class="progress-fill"></div>
+            <div id="progress-plane" class="progress-plane">✈️</div>
+          </div>
+          <span class="airport-code right">🏰 RIMA LAND</span>
         </div>
-        <span class="airport-code right">🏰 RIMA LAND</span>
-      </div>
 
-      <!-- Top Row Stats -->
-      <div class="hud-stats">
-        <div class="hud-stat-box score-box">
-          <span class="stat-label">Memories Cleared</span>
-          <span id="hud-score" class="stat-value">0</span>
+        <!-- Top Row Stats -->
+        <div class="hud-stats">
+          <div class="hud-stat-box score-box">
+            <span class="stat-label">Memories Cleared</span>
+            <span id="hud-score" class="stat-value">0</span>
+          </div>
+          <div class="hud-stat-box progress-box">
+            <span class="stat-label">Distance Left</span>
+            <span id="hud-distance" class="stat-value">1000 km</span>
+          </div>
+          <!-- Audio controls -->
+          <button id="btn-audio-toggle" class="btn-icon" aria-label="Toggle Sound">
+            <span class="icon-on">🔊</span>
+            <span class="icon-off hidden">🔇</span>
+          </button>
         </div>
-        <div class="hud-stat-box progress-box">
-          <span class="stat-label">Distance Left</span>
-          <span id="hud-distance" class="stat-value">1000 km</span>
-        </div>
-        <!-- Audio controls -->
-        <button id="btn-audio-toggle" class="btn-icon" aria-label="Toggle Sound">
-          <span class="icon-on">🔊</span>
-          <span class="icon-off hidden">🔇</span>
-        </button>
       </div>
 
       <!-- Jump Indicator (for desktop spacebar/touch) -->

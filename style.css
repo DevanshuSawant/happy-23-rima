@@ -21,13 +21,19 @@
   -webkit-user-select: none;
 }
 
+html, body {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+}
+
 body {
   font-family: var(--font-body);
   background-color: var(--bg-dark);
   color: #ffffff;
-  overflow: hidden;
-  width: 100vw;
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -91,6 +97,8 @@ body {
   padding: 40px;
   width: 100%;
   max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
   box-shadow: 0 20px 50px rgba(255, 105, 180, 0.25), inset 0 0 20px rgba(255, 255, 255, 0.2);
   text-align: center;
   color: #fff;
@@ -288,12 +296,20 @@ body {
   top: 0;
   left: 0;
   width: 100%;
+  height: 100%;
   padding: 20px;
   z-index: 5;
   pointer-events: none; /* Let clicks pass through to game canvas */
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+}
+
+.hud-top-group {
+  display: flex;
+  flex-direction: column;
   gap: 15px;
+  width: 100%;
 }
 
 .hud-container * {
@@ -401,10 +417,7 @@ body {
 
 /* HUD controls hint */
 .controls-hint {
-  position: absolute;
-  bottom: -480px; /* Positions it nicely on standard layouts */
-  left: 50%;
-  transform: translateX(-50%);
+  align-self: center;
   background: rgba(15, 23, 42, 0.75);
   padding: 8px 20px;
   border-radius: 20px;
@@ -416,6 +429,7 @@ body {
   align-items: center;
   gap: 8px;
   white-space: nowrap;
+  margin-bottom: 10px;
 }
 
 .tap-hint-hand {
@@ -608,8 +622,9 @@ body {
   background: rgba(15, 23, 42, 0.85);
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 20px;
+  align-items: flex-start;
+  padding: 40px 20px;
+  overflow-y: auto;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.5s, visibility 0.5s;
@@ -627,6 +642,7 @@ body {
   flex-direction: column;
   align-items: center;
   animation: slide-up-ticket 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  margin: auto 0;
 }
 
 /* Ticket Structure */
@@ -1050,3 +1066,190 @@ body {
     gap: 10px;
   }
 }
+
+/* Responsive adjustments for mobile screen widths */
+@media (max-width: 480px) {
+  /* Progress bar and HUD elements spacing on narrow screens */
+  .progress-bar-wrapper {
+    padding: 6px 12px;
+    gap: 8px;
+  }
+  .airport-code {
+    font-size: 0.85rem;
+  }
+  .stat-label {
+    font-size: 0.65rem;
+  }
+  .stat-value {
+    font-size: 1.15rem;
+  }
+  .hud-stat-box {
+    padding: 6px 12px;
+    border-radius: 12px;
+  }
+  .btn-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 1rem;
+  }
+}
+
+/* Responsive adjustments for mobile landscape (short viewports) */
+@media (max-height: 520px) {
+  /* Intro card scaling */
+  .intro-graphic-container {
+    height: 60px;
+    margin-bottom: 15px;
+  }
+  .heart-pulse-icon {
+    font-size: 2.5rem;
+  }
+  .plane-fly-anim {
+    font-size: 1.8rem;
+  }
+  .game-title {
+    font-size: 1.8rem !important;
+    margin-bottom: 4px;
+  }
+  .game-subtitle {
+    font-size: 0.95rem !important;
+    margin-bottom: 12px;
+  }
+  .story-text {
+    font-size: 0.9rem !important;
+    margin-bottom: 12px !important;
+  }
+  .glass-card {
+    padding: 16px 24px !important;
+    border-radius: 20px;
+  }
+
+  /* Video player card adjustments to avoid vertical scrolling */
+  .video-card h2.screen-title {
+    display: none;
+  }
+  .video-card {
+    padding: 12px !important;
+    gap: 8px !important;
+    max-height: 95vh !important;
+  }
+  .video-container-wrapper {
+    max-height: 55vh !important;
+  }
+  .video-controls-row {
+    gap: 8px !important;
+  }
+  .btn-video-control, .btn {
+    padding: 8px 16px !important;
+    font-size: 0.9rem !important;
+  }
+
+  /* Game over layout scaling */
+  .screen-title {
+    font-size: 1.6rem !important;
+    margin-bottom: 8px;
+  }
+  .stats-summary {
+    margin: 12px 0 !important;
+    gap: 12px;
+  }
+  .summary-value {
+    font-size: 1.3rem !important;
+  }
+  .summary-item {
+    padding: 6px !important;
+  }
+  .summary-label {
+    font-size: 0.7rem;
+  }
+
+  /* Win screen envelope scaling */
+  .win-title {
+    font-size: 1.8rem !important;
+    margin-bottom: 4px;
+  }
+  .win-subtitle {
+    font-size: 0.95rem !important;
+    margin-bottom: 15px;
+  }
+  .envelope-wrapper {
+    width: 240px;
+    height: 150px;
+    margin-bottom: 10px;
+  }
+  .envelope {
+    border-radius: 0 0 12px 12px;
+  }
+  .envelope-flap {
+    border-left: 120px solid transparent;
+    border-right: 120px solid transparent;
+    border-top: 75px solid #c0392b;
+  }
+  .envelope-pocket {
+    border-left: 120px solid #c0392b;
+    border-right: 120px solid #c0392b;
+    border-bottom: 75px solid #d94333;
+    border-radius: 0 0 12px 12px;
+  }
+  .letter-preview {
+    top: 8px;
+    left: 15px;
+    right: 15px;
+    padding: 10px;
+    font-size: 0.8rem;
+    border-radius: 6px;
+  }
+  .envelope-wrapper.open .letter-preview {
+    transform: translateY(-75px);
+  }
+  .envelope-instruction {
+    font-size: 0.8rem;
+    margin-top: 10px;
+  }
+
+  /* Boarding pass ticket scaling */
+  .ticket-header {
+    padding: 12px 18px;
+  }
+  .ticket-body {
+    padding: 16px;
+  }
+  .flight-route {
+    margin-bottom: 15px;
+  }
+  .airport-code-large {
+    font-size: 1.6rem;
+  }
+  .ticket-info-grid {
+    grid-gap: 12px 6px;
+  }
+  .info-value {
+    font-size: 0.85rem;
+  }
+  .ticket-stub {
+    padding: 12px 18px 18px;
+  }
+  .stub-message {
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+  }
+  .barcode {
+    height: 25px;
+  }
+}
+
+/* Force landscape layout for the game container in portrait viewports */
+@media (orientation: portrait) {
+  #game-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vh;
+    height: 100vw;
+    transform: translate(-50%, -50%) rotate(90deg);
+    transform-origin: center;
+    box-shadow: none;
+    border-radius: 0;
+  }
+}
+

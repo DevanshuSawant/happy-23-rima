@@ -354,15 +354,55 @@ window.addEventListener('DOMContentLoaded', () => {
   requestAnimationFrame(gameLoop);
 });
 
+// Recalculate dynamic configurations based on current screen size
+function updateDynamicConfig() {
+  const width = canvas.width;
+  const height = canvas.height;
+
+  // Scale plane size based on screen dimensions
+  const planeSize = Math.max(50, Math.min(90, height * 0.15, width * 0.15));
+  gameState.plane.width = planeSize;
+  gameState.plane.height = planeSize;
+
+  // Scale plane X position
+  CONFIG.planeX = Math.max(40, Math.min(150, width * 0.18));
+
+  // Scale obstacle (cloud) width and gap
+  CONFIG.cloudWidth = Math.max(60, Math.min(100, planeSize * 1.1));
+  CONFIG.cloudGap = Math.max(120, Math.min(220, planeSize * 2.45));
+  CONFIG.minCloudHeight = Math.max(30, Math.min(50, height * 0.1));
+
+  // Scale physics (gravity and jumpImpulse)
+  const scaleFactorY = height / 600;
+  CONFIG.gravity = 0.22 * scaleFactorY;
+  CONFIG.jumpImpulse = -5.2 * scaleFactorY;
+
+  // Scale horizontal speed
+  const scaleFactorX = width / 1000;
+  CONFIG.horizontalSpeed = 3.0 * Math.max(0.5, Math.min(1.0, scaleFactorX));
+
+  // Scale cloud generation interval to keep horizontal distance between clouds proportional to screen width
+  const obstacleSpacing = Math.max(220, width * 0.45);
+  CONFIG.cloudInterval = Math.round(obstacleSpacing / CONFIG.horizontalSpeed);
+}
+
 // Resize Canvas to fit screen
 function resizeCanvas() {
   canvas.width = canvas.parentElement.clientWidth;
   canvas.height = canvas.parentElement.clientHeight;
   
-  // Re-adjust plane initial height
+  // Recalculate dynamic config parameters
+  updateDynamicConfig();
+
+  // Re-adjust plane initial height / bounds
   if (gameState.state === STATES.INTRO || gameState.state === STATES.VIDEO_INTRO) {
     gameState.plane.y = canvas.height / 2;
+  } else {
+    gameState.plane.y = Math.min(gameState.plane.y, canvas.height - gameState.plane.height - 20);
   }
+
+  // Re-initialize stars and clouds to fit the new size
+  initDecorations();
 }
 
 // Load Images and perform background transparent processing
@@ -656,6 +696,20 @@ function planeJump() {
 // Visual state management transitions
 function transitionToState(newState) {
   gameState.state = newState;
+
+  // Toggle dynamic landscape rotation class on the game container
+  const container = document.getElementById('game-container');
+  if (container) {
+    const isGameplay = [STATES.PLAYING, STATES.GAMEOVER, STATES.LANDING].includes(newState);
+    if (isGameplay) {
+      container.classList.add('force-landscape');
+    } else {
+      container.classList.remove('force-landscape');
+    }
+  }
+
+  // Trigger resize to immediately adapt canvas buffer to the active screen mode
+  resizeCanvas();
   
   // Hide all screens initially
   document.querySelectorAll('.overlay-screen').forEach(scr => scr.classList.remove('active'));
@@ -898,11 +952,13 @@ function generateObstacleCloud() {
 // AABB bounding box collision check
 function checkCollision(plane, obs) {
   // Plane hitbox (tighter than rendering size for highly forgiving gameplay)
+  const padX = gameState.plane.width * 0.25;
+  const padY = gameState.plane.height * 0.22;
   const pBox = {
-    left: CONFIG.planeX + 24,
-    right: CONFIG.planeX + gameState.plane.width - 24,
-    top: gameState.plane.y + 20,
-    bottom: gameState.plane.y + gameState.plane.height - 20
+    left: CONFIG.planeX + padX,
+    right: CONFIG.planeX + gameState.plane.width - padX,
+    top: gameState.plane.y + padY,
+    bottom: gameState.plane.y + gameState.plane.height - padY
   };
 
   // Top Obstacle Cloud Box
@@ -1044,7 +1100,7 @@ function createHeartSparkle(yPos, isFlap = false) {
   
   for (let i = 0; i < count; i++) {
     gameState.particles.push({
-      x: CONFIG.planeX + (isFlap ? 0 : 50),
+      x: CONFIG.planeX + (isFlap ? 0 : gameState.plane.width * 0.5),
       y: yPos,
       vx: isFlap ? -(1 + Math.random() * 2) : (Math.random() - 0.2) * spread,
       vy: (Math.random() - 0.5) * spread,
@@ -1176,22 +1232,23 @@ function drawObstacleCloudPillar(x, y, height, isTop, imageIdx) {
   ctx.shadowBlur = 12;
 
   // Draw main pillar connector shape
-  ctx.fillRect(x + 20, y, CONFIG.cloudWidth - 40, height);
+  ctx.fillRect(x + CONFIG.cloudWidth * 0.2, y, CONFIG.cloudWidth * 0.6, height);
 
   // Draw cloud puffs at the tip opening
-  const puffY = isTop ? y + height - 25 : y;
+  const puffY = isTop ? y + height - CONFIG.cloudWidth * 0.25 : y;
   ctx.beginPath();
-  ctx.arc(x + 25, puffY + 15, 30, 0, Math.PI * 2);
-  ctx.arc(x + 50, puffY + 5, 35, 0, Math.PI * 2);
-  ctx.arc(x + 75, puffY + 15, 30, 0, Math.PI * 2);
+  ctx.arc(x + CONFIG.cloudWidth * 0.25, puffY + CONFIG.cloudWidth * 0.15, CONFIG.cloudWidth * 0.3, 0, Math.PI * 2);
+  ctx.arc(x + CONFIG.cloudWidth * 0.5, puffY + CONFIG.cloudWidth * 0.05, CONFIG.cloudWidth * 0.35, 0, Math.PI * 2);
+  ctx.arc(x + CONFIG.cloudWidth * 0.75, puffY + CONFIG.cloudWidth * 0.15, CONFIG.cloudWidth * 0.3, 0, Math.PI * 2);
   ctx.fill();
   ctx.shadowBlur = 0; // Turn off shadows for clip
 
   // Draw Photo Frame inside the Cloud opening
   // Circle frame details
   const frameX = x + CONFIG.cloudWidth / 2;
-  const frameY = isTop ? y + height - 55 : y + 55;
-  const radius = 32;
+  const offset = CONFIG.cloudWidth * 0.55;
+  const frameY = isTop ? y + height - offset : y + offset;
+  const radius = CONFIG.cloudWidth * 0.32;
 
   // Draw frame border
   ctx.strokeStyle = '#ffffff';
